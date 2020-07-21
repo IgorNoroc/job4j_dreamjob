@@ -1,4 +1,4 @@
-package ru.job4j.dream.servlet;
+package ru.job4j.dream.servlets;
 
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.store.PsqlStore;
@@ -22,7 +22,8 @@ public class CandidateServlet extends HttpServlet {
         PsqlStore.instOf().save(
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
-                        req.getParameter("name")
+                        req.getParameter("name"),
+                        ""
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,6 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Работа мечты</title>
 </head>
 <body>
@@ -35,18 +36,33 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${candidates}" var="candidate">
+                    <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
-                                <c:out value="${candidate.name}"/>
+                                <c:out value="${can.name}"/>
+                            </td>
+                            <td>
+                                <a href="<c:url value='/download?photo=${can.photo}'/>">Download</a>
+                            </td>
+                            <td>
+                                <img src="<c:url value='/download?photo=${can.photo}'/>" width="200px" height="200px"/>
+                            </td>
+                            <td>
+                                <a href="<c:url value='/candidate/upload_image.jsp?id=${can.id}'/>">Upload Candidate's image</a>
+                            </td>
+                            <td>
+                                <a href="<c:url value='/deleteCandidate?id=${can.id}'/>">Delete Candidate</a>
                             </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+                <li>
+                    <a class="nav-link" href="/dreamjob">Home page<</a>
+                </li>
             </div>
         </div>
     </div>

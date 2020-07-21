@@ -35,21 +35,14 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                <% if (id == null) { %>
-                Новый кандидат.
-                <% } else { %>
-                Редактирование кандидата.
-                <% } %>
+              Добавляем файл кандидату.
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/uploadImage?id=<%=candidate.getId()%>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <label>
-                            <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
-                        </label>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <input type="file" name="file">
                     </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
         </div>

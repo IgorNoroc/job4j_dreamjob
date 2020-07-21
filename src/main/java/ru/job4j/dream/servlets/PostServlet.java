@@ -1,4 +1,4 @@
-package ru.job4j.dream.servlet;
+package ru.job4j.dream.servlets;
 
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.PsqlStore;

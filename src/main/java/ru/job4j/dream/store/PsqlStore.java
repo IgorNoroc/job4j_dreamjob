@@ -73,7 +73,9 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("photo")));
                 }
             }
         } catch (Exception e) {
@@ -124,7 +126,9 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             ResultSet it = ps.executeQuery();
             while (it.next()) {
-                candidate = new Candidate(id, it.getString("name"));
+                candidate = new Candidate(id,
+                        it.getString("name"),
+                        it.getString("photo"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,9 +155,10 @@ public class PsqlStore implements Store {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, photo) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setString(2, candidate.getPhoto());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -179,9 +184,20 @@ public class PsqlStore implements Store {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name=? WHERE id = ?")) {
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name=?, photo=? WHERE id = ?")) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setString(2, candidate.getPhoto());
+            ps.setInt(3, candidate.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCandidate(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DElETE FROM candidate WHERE id=?")) {
+            ps.setInt(1, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
