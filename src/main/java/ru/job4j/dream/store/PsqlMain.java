@@ -17,6 +17,5 @@ public class PsqlMain {
         System.out.println("-----------------");
         System.out.println(store.findPostById(1).getName());
         System.out.println(store.findCandidateById(1).getName());
-
     }
 }

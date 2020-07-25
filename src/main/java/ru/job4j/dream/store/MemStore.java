@@ -2,6 +2,7 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,10 +13,10 @@ public class MemStore implements Store {
     private static final MemStore INST = new MemStore();
     private Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
-    @SuppressWarnings("CheckStyle")
+    private Map<Integer, User> users = new ConcurrentHashMap<>();
     private static AtomicInteger POST_ID = new AtomicInteger(4);
-    @SuppressWarnings("CheckStyle")
     private static AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
+    private static AtomicInteger USER_ID = new AtomicInteger();
 
     private MemStore() {
         posts.put(1, new Post(1, "Junior Java Job"));
@@ -63,5 +64,25 @@ public class MemStore implements Store {
     @Override
     public void deleteCandidate(Candidate candidate) {
         candidates.remove(candidate.getId(), candidate);
+    }
+
+    @Override
+    public void addUser(User user) {
+        users.put(USER_ID.incrementAndGet(), user);
+    }
+
+    @Override
+    public User findUserById(int id) {
+        return users.get(id);
+    }
+
+    @Override
+    public Collection<User> getAllUsers() {
+        return users.values();
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        users.remove(user);
     }
 }
