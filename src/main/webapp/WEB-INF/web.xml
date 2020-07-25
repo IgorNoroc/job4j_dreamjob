@@ -15,6 +15,12 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
+<!--     ////////////////////////servlets/////////////////////////////////   -->
+
+    <servlet>
+        <servlet-name>RegServlet</servlet-name>
+        <servlet-class>ru.job4j.dream.servlets.RegServlet</servlet-class>
+    </servlet>
 
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
@@ -56,6 +62,12 @@
         <servlet-class>ru.job4j.dream.servlets.DeleteCandidateServlet</servlet-class>
     </servlet>
 
+    <!--//////////////////////mapping////////////////////////////-->
+
+    <servlet-mapping>
+        <servlet-name>RegServlet</servlet-name>
+        <url-pattern>/reg.do</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>

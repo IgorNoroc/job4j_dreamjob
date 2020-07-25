@@ -85,4 +85,9 @@ public class MemStore implements Store {
     public void deleteUser(User user) {
         users.remove(user);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
+    }
 }

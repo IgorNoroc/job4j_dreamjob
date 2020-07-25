@@ -212,7 +212,7 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
-            ps.setString(3, user.getEmail());
+            ps.setString(3, user.getPassword());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -274,5 +274,24 @@ public class PsqlStore implements Store {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User user = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users where email = ?")) {
+            ps.setString(1, email);
+            ResultSet it = ps.executeQuery();
+            while (it.next()) {
+                user = new User(it.getInt("id"),
+                        it.getString("name"),
+                        it.getString("email"),
+                        it.getString("password"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
