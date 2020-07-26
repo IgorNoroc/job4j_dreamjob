@@ -76,9 +76,6 @@
                     </c:forEach>
                     </tbody>
                 </table>
-                <li>
-                    <a class="nav-link" href="/dreamjob">Home page<</a>
-                </li>
             </div>
         </div>
     </div>

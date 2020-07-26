@@ -33,11 +33,6 @@
     </servlet>
 
     <servlet>
-        <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>ru.job4j.dream.servlets.DownloadServlet</servlet-class>
     </servlet>
@@ -77,11 +72,6 @@
     <servlet-mapping>
         <servlet-name>UploadCandidateImage</servlet-name>
         <url-pattern>/uploadImage</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>UploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
