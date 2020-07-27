@@ -6,6 +6,9 @@ import ru.job4j.dream.model.User;
 
 import java.util.Collection;
 
+/**
+ * Interface Store for task: dream job.
+ */
 public interface Store {
     Collection<Post> findAllPosts();
 

@@ -2,6 +2,9 @@ package ru.job4j.dream.model;
 
 import java.util.Objects;
 
+/**
+ * User for task: dream job.
+ */
 public class User {
     private int id;
     private String name;
@@ -61,5 +64,15 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

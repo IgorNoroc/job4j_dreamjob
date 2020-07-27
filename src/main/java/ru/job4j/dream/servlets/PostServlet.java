@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * 1. Servlet. Web.xml [#318216]
+ * Http servlet what creates or edits the post.
  */
 public class PostServlet extends HttpServlet {
     @Override
@@ -22,7 +22,7 @@ public class PostServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         PsqlStore.instOf().save(
                 new Post(

@@ -15,9 +15,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Psql storage for task: dream job.
+ */
 public class PsqlStore implements Store {
+    /**
+     * Connection pool.
+     */
     private final BasicDataSource pool = new BasicDataSource();
 
+    /**
+     * When at first time create instance of this class,
+     * we connection to database in connection pool.
+     */
     private PsqlStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
@@ -41,6 +51,9 @@ public class PsqlStore implements Store {
 
     }
 
+    /**
+     * Create singleton.
+     */
     private static final class Lazy {
         private static final Store INST = new PsqlStore();
     }
@@ -49,6 +62,11 @@ public class PsqlStore implements Store {
         return Lazy.INST;
     }
 
+    /**
+     * Extracting all the post from database.
+     *
+     * @return list of posts.
+     */
     @Override
     public Collection<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
@@ -66,6 +84,11 @@ public class PsqlStore implements Store {
         return posts;
     }
 
+    /**
+     * Extracting all the candidates from database.
+     *
+     * @return list of candidates.
+     */
     @Override
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
@@ -85,6 +108,11 @@ public class PsqlStore implements Store {
         return candidates;
     }
 
+    /**
+     * Saving or editing the post to database.
+     *
+     * @param post post.
+     */
     @Override
     public void save(Post post) {
         if (post.getId() == 0) {
@@ -94,6 +122,11 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Saving or editing the candidate to database.
+     *
+     * @param candidate candidate.
+     */
     @Override
     public void save(Candidate candidate) {
         if (candidate.getId() == 0) {
@@ -103,6 +136,12 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Search post by id in database.
+     *
+     * @param id id.
+     * @return post or nothing.
+     */
     @Override
     public Post findPostById(int id) {
         Post post = null;
@@ -119,6 +158,12 @@ public class PsqlStore implements Store {
         return post;
     }
 
+    /**
+     * Search candidate by id in database.
+     *
+     * @param id id.
+     * @return candidate or nothing.
+     */
     @Override
     public Candidate findCandidateById(int id) {
         Candidate candidate = null;
@@ -137,6 +182,12 @@ public class PsqlStore implements Store {
         return candidate;
     }
 
+    /**
+     * Saving a new post to database.
+     *
+     * @param post post.
+     * @return post.
+     */
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
@@ -154,6 +205,12 @@ public class PsqlStore implements Store {
         return post;
     }
 
+    /**
+     * Saving a new candidate to database.
+     *
+     * @param candidate candidate.
+     * @return candidate.
+     */
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, photo) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
@@ -172,6 +229,11 @@ public class PsqlStore implements Store {
         return candidate;
     }
 
+    /**
+     * Editing the post in database.
+     *
+     * @param post post.
+     */
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE post SET name=? WHERE id = ?")) {
@@ -183,6 +245,11 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Editing the candidate in database.
+     *
+     * @param candidate candidate.
+     */
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name=?, photo=? WHERE id = ?")) {
@@ -195,6 +262,11 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Deleting candidate from database.
+     *
+     * @param candidate candidate.
+     */
     public void deleteCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("DElETE FROM candidate WHERE id=?")) {
@@ -205,6 +277,11 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Save a new user to database.
+     *
+     * @param user user.
+     */
     @Override
     public void addUser(User user) {
         try (Connection cn = pool.getConnection();
@@ -224,6 +301,12 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Search user by id.
+     *
+     * @param id id.
+     * @return user of nothing.
+     */
     @Override
     public User findUserById(int id) {
         User user = null;
@@ -243,6 +326,11 @@ public class PsqlStore implements Store {
         return user;
     }
 
+    /**
+     * Get users' list from database.
+     *
+     * @return list.
+     */
     @Override
     public Collection<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -265,6 +353,11 @@ public class PsqlStore implements Store {
         return users;
     }
 
+    /**
+     * Deleting user from database.
+     *
+     * @param user user.
+     */
     @Override
     public void deleteUser(User user) {
         try (Connection cn = pool.getConnection();
@@ -276,6 +369,12 @@ public class PsqlStore implements Store {
         }
     }
 
+    /**
+     * Search user by email.
+     *
+     * @param email email.
+     * @return user of nothing.
+     */
     @Override
     public User findByEmail(String email) {
         User user = null;

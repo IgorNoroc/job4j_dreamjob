@@ -11,11 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class special for servlet Candidate.
+ */
 public class FilesDownloader {
-    public static void downloadFiles(HttpServlet servlet,  HttpServletRequest req, Candidate candidate) throws IOException {
+    /**
+     * Upload photo to the server and set user's photo name.
+     *
+     * @param servlet   servlet.
+     * @param req       request.
+     * @param candidate current candidate.
+     */
+    public static void downloadFiles(HttpServlet servlet, HttpServletRequest req, Candidate candidate) {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = servlet.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -36,7 +45,7 @@ public class FilesDownloader {
                     }
                 }
             }
-        } catch (FileUploadException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

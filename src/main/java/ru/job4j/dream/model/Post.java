@@ -3,7 +3,7 @@ package ru.job4j.dream.model;
 import java.util.Objects;
 
 /**
- * 2. Scriplet. Динамическая таблица. [#318203]
+ * Post for task: dream job.
  */
 public class Post {
     private int id;
