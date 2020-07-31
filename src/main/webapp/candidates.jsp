@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +21,10 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style type="text/css">
+        #h { border: black; color: aquamarine}
+    </style>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -44,7 +48,7 @@
                 Кандидаты
             </div>
             <div class="card-body">
-                <table class="table">
+                <table class="table" style="background-color: antiquewhite">
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
@@ -58,6 +62,15 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${can.name}"/>
+                            </td>
+                            <td>
+                                <label>
+                                    <c:forEach items="${cities}" var="city">
+                                        <c:if test="${can.cityId == city.id}">
+                                        <c:out value="${city.name}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                </label>
                             </td>
                             <td>
                                 <a href="<c:url value='/download?photo=${can.photo}'/>">Download</a>
@@ -74,10 +87,12 @@
                             </td>
                         </tr>
                     </c:forEach>
+
                     </tbody>
                 </table>
             </div>
         </div>
+        <h5 id="h"><a href="<%=request.getContextPath()%>/posts.do">Home <<<</a></h5>
     </div>
 </div>
 </body>

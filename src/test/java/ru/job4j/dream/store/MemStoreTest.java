@@ -47,8 +47,9 @@ public class MemStoreTest {
         CandidateServlet servlet = new CandidateServlet();
         when(request.getParameter("id")).thenReturn("0");
         when(request.getParameter("name")).thenReturn("Tanea");
+        when(request.getParameter("city")).thenReturn("0");
         servlet.doPost(request, response);
-        Candidate expected = new Candidate(4, "Tanea", "");
+        Candidate expected = new Candidate(4, "Tanea", "", 0);
         Candidate result = store.getCandidates().get(4);
         assertThat(expected, is(result));
     }

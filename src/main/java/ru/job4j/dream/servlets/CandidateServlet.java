@@ -16,6 +16,7 @@ public class CandidateServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
+        req.setAttribute("cities", PsqlStore.instOf().getAllCities());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 
@@ -26,7 +27,8 @@ public class CandidateServlet extends HttpServlet {
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name"),
-                        ""
+                        "",
+                        Integer.parseInt(req.getParameter("city"))
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");

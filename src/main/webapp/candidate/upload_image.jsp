@@ -27,7 +27,7 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", "");
+    Candidate candidate = new Candidate(0, "", "", 0);
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }

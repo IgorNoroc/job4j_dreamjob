@@ -2,6 +2,8 @@
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,13 +23,46 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style type="text/css">
+        body {
+            background-color: bisque
+        }
+    </style>
 
+    <script>
+        function validate() {
+            const msg = "please fill in the field ";
+            if ($('#name').val() === '') {
+                alert(msg + $('#name').attr('title'))
+                return false;
+            } else if ($('#city').val() === '') {
+                alert(msg + $('#city').attr('title'))
+                return false;
+            }
+            return true;
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/dreamjob/city',
+                dataType: 'json'
+            }).done(function (data) {
+                let select = $('select[name="city"]');
+                select.append('<option value="" selected></option>')
+                data.valueOf().forEach(el => select.append('<option value=' + el.id + '>' + el.name + '</option>'));
+            }).fail(function (err) {
+                alert(err);
+            });
+        });
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", "");
+    Candidate candidate = new Candidate(0, "", "", 0);
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
@@ -41,7 +76,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
                                 <div class="container">
-                                    <div class="topright"> <c:out value="${user.name}"/> | Выйти</div>
+                                    <div class="topright"><c:out value="${user.name}"/> | Выйти</div>
                                 </div>
                             </a>
                         </li>
@@ -58,11 +93,15 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <label>
-                            <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
-                        </label>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <label id="n">Имя</label>
+                        <label  for="name">
+                            <input type="text" class="form-control" placeholder="введите имя" id="name" title="имя"
+                                   name="name"
+                                   value="<%=candidate.getName()%>">
+                        </label><br/>
+                        <label><h5><label>Город</label> <select class="form-control" id="city" name="city" title="город"></select><br/></h5>
+                            </label><br/>
+                        <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                     </div>
                 </form>
             </div>

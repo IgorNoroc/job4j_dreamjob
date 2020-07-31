@@ -24,8 +24,8 @@
             const msg = "please fill in the field ";
             if ($('#email').val() === '') {
                 alert(msg + $('#email').attr('title'))
-            } else if ($('#passowrd').val() === '') {
-                alert(msg + $('#passowrd').attr('title'))
+            } else if ($('#password').val() === '') {
+                alert(msg + $('#password').attr('title'))
             }
         }
     </script>
@@ -55,8 +55,8 @@
                         <input type="text" class="form-control" id="email" title="почта" name="email">
                     </div>
                     <div class="form-group">
-                        <label for="passowrd">Пароль</label>
-                        <input type="text" class="form-control" id="passowrd" title="пароль" name="password">
+                        <label for="password">Пароль</label>
+                        <input type="text" class="form-control" id="password" title="пароль" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Войти</button>
                 </form>
